@@ -38,7 +38,7 @@ To install and set up this project, follow these steps:
 	
 2.   Navigate to the project directory:
  
-	   `cd project-name`
+	`cd project-name`
 
 3. create a virtual environment:
 
@@ -50,14 +50,15 @@ To install and set up this project, follow these steps:
     
 5.  Install the required packages:
     
-	   `pip install -r requirements.txt`
+	`pip install -r requirements.txt`
 
 ### Usage
+1. Insert your OpenAI API key to .env file
 
-1. Start the app:
+2. Start the app:
 	`streamlit run app.py`
 
-2. Open browser on http://localhost:8501/
+3. Open browser on http://localhost:8501/
 
 ## Features
 1. Generate Quiz - Generates a quiz according to the topic given and level
