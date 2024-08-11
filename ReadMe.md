@@ -1,126 +1,104 @@
 
-
 # LLM-Powered Quiz Question Generator
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Features](#features)
-- [LLM-Selection](#llm-selection)
-- [Prompting-Techniques](#prompting-techniques)
-- [Ideas](#ideas)
+-   [Introduction](#introduction)
+-   [Features](#features)
+-   [Getting Started](#getting-started)
+    -   [Prerequisites](#prerequisites)
+    -   [Installation](#installation)
+-   [Usage](#usage)
+-   [LLM Selection](#llm-selection)
+-   [Prompting Techniques](#prompting-techniques)
+-   [Future Enhancements](#future-enhancements)
+-   [Contributing](#contributing)
+-   [License](#license)
 
 ## Introduction
 
-This project aims to develop a simple web-based tool that generates quiz questions on a general knowledge topic using a large language model (LLM) and advanced prompt engineering techniques.
+The LLM-Powered Quiz Question Generator is a web-based tool that leverages large language models (LLMs) and advanced prompt engineering techniques to generate quiz questions on general knowledge topics. This project draws inspiration from the STOM Web Research agent implementation in the Langgraph documentation.
 
-The project was inspired from the STOM Web Research agent implementation of Langgraph docs:
-https://langchain-ai.github.io/langgraph/tutorials/storm/storm
+Key aspects of the project:
 
-You can find more guidance about it in the following YouTube video here:
-https://youtu.be/1uUORSZwTz4?si=XnFLRTlsUfZJkI45
+-   Expands given topics to related subjects
+-   Creates a dialogue between "Wiki Editor" and "Expert" personas
+-   Generates diverse and engaging quiz questions based on the expanded context
 
-This uses the first part of the suggested structure in the STOM implementation:
-1. Expanding the topic to related topics
-2. Retrieving Wiki pages about the related topics
-3. Creating a dialog between a "Wiki Editor" persona and "Expert" persona
-4. Using the discussion to create question to be used in the quiz
+For more information on the STOM implementation, check out:
 
-I decided not to go through with the vectorestore and section writer as I only used the concept of expanding the topic to have a rich and diverse context for the quiz creation.
+-   [Langgraph STOM Tutorial](https://langchain-ai.github.io/langgraph/tutorials/storm/storm)
+-   [YouTube Guide](https://youtu.be/1uUORSZwTz4?si=XnFLRTlsUfZJkI45)
 
+## Features
+
+1.  **Generate Quiz**: Create quizzes on user-specified topics with adjustable difficulty levels
+2.  **Validate Quiz**: Test your knowledge by answering the generated questions (Bonus feature)
+3.  **Learn More**: Access additional information about each question (Bonus feature)
 
 ## Getting Started
 
 ### Prerequisites
 
--   Install [Python 3.10](https://www.python.org/downloads/)
--   Additional dependencies listed in `requirements.txt`
+-   Python 3.10 or higher
+-   OpenAI API key
 
 ### Installation
 
-To install and set up this project, follow these steps:
+1.  Clone the repository: 
+`git clone https://github.com/yourusername/llm-quiz-generator.git`
 
-1. Clone the repository:
+3.  Navigate to the project directory: `cd llm-quiz-generator`
+4.  Create a virtual environment: `python3 -m venv venv`
+5.  Activate the virtual environment:
+    -   On Unix or MacOS: `source venv/bin/activate`
+    -   On Windows: `venv\Scripts\activate`
+6.  Install the required packages: `pip install -r requirements.txt`
+7.  Create a .env file in the project root and add your OpenAI API key: `OPENAI_API_KEY=your_api_key_here`
 
-   `git clone https://github.com/yourusername/project-name.git`
-	
-2.   Navigate to the project directory:
-	
-	`cd project-name`
+## Usage
 
-4. create a virtual environment:
+1.  Ensure your virtual environment is activated.
+2.  Start the Streamlit app: `streamlit run app.py`
+3.  Open your web browser and navigate to [http://localhost:8501/](http://localhost:8501/)
+4.  Enter a topic, select the desired difficulty level, and generate your quiz!
 
-	`python3 -m venv venv`
+## LLM Selection
 
-5. Activate the virtual environment:
+### Open-source vs. Proprietary
 
-	`source venv/bin/activate`
-    
-6.  Install the required packages:
-    
-	`pip install -r requirements.txt`
+This project uses a proprietary model for ease of use and stability. However, the architecture allows for easy integration of open-source alternatives.
 
-### Usage
-1. Insert your OpenAI API key to .env file
+### OpenAI vs. Anthropic
 
-2. Start the app:
-	`streamlit run app.py`
+OpenAI's models were chosen due to prior experience and familiarity. The project structure allows for easy model switching by modifying only the `graph/llm.py` file.
 
-3. Open browser on http://localhost:8501/
+### Model Choice
 
-## Features
-1. Generate Quiz - Generates a quiz according to the topic given and level
-2. Validate Quiz (Bonus) - See if you can answer the quiz correctly
-3. Learn more (Bonus) - Refer to a knowledge article about the question asked
+**GPT-3.5-turbo** was selected for its balance of performance, cost-effectiveness, and speed. No multi-modal functionality was required for this project.
 
-## LLM-Selection
+## Prompting Techniques
 
-### Open-source Vs. Proprietary
+1.  **Few-shot Learning**: Providing examples in prompts to guide the model's output.
+2.  **Role-playing**: Utilizing various "personas" (e.g., Quiz Writer, Wiki Writer, Editor) to create a diverse and enriched quiz creation process.
+3.  **Structured Output**: Employing Langchain Pydantic classes to ensure consistent and parseable model outputs.
 
-Since no limitations were presented as part of the assignment I chose to use
-proprietary model for the ease of use and stability
+## Future Enhancements
 
-### OpenAI Vs. Antropic
+1.  Implement stronger models for improved results
+2.  Further incorporate STORM paper methodologies
+3.  Utilize asynchronous calls for better performance
+4.  Integrate multiple models for answer and knowledge diversity
+5.  Add loading animations for improved user experience
+6.  Implement error handling and input validation
+7.  Add unit tests and integration tests
+8.  Create a more robust and scalable backend architecture
+9.  Improve accessibility and responsive design
 
-Since both companies models could be suitable for the assignment I chose OpenAI models since
-I had more experience working with their earlier, cheaper and lightweight models.
+## Contributing
 
-The project structure is made such it is very easy to change models and requires changing only the `graph/llm.py` file.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### Model chosen
+## License
 
-I chose to use **gpt-3.5-turbo** since it is cheaper and faster than OpenAI latest models and no multi-modality functionality is required
-
-## Prompting-Techniques
-
-### Few-shot
-Providing prompt with examples to give guidance to the model on the desired output
-
-### Role-playing
-
-Created few "personas" each with its own role and task to create a diverse and an enriched process for the creation of the quiz.
-
-Some of the personas examples are:
-
-1. Quiz writer
-2. Wiki writer
-3. Editor
-
-### Structured-output
-
-I have used Langchain Pydantic classes to ensure the structure of the model outputs.
-This helps with parsing of the model response and automation of the process
-
-
-## Ideas
-
-To enhance the tool the tool capabilities and performance I suggest the following steps:
-
-1. Choosing stronger model for better results
-2. Further implementing according to the STORM paper and the refine outline steps:
-	https://langchain-ai.github.io/langgraph/tutorials/storm/storm/#refine-outline
-3. Using `async` calls for better performance
-4. Using a mix of different models for diversity in answer and knowledge
-5. loading animation for better UX
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
