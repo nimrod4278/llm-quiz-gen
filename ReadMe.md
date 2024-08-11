@@ -1,4 +1,5 @@
 
+
 # LLM-Powered Quiz Question Generator
 
 ## Table of Contents
@@ -21,6 +22,15 @@ https://langchain-ai.github.io/langgraph/tutorials/storm/storm
 You can find more guidance about it in the following YouTube video here:
 https://youtu.be/1uUORSZwTz4?si=XnFLRTlsUfZJkI45
 
+This uses the first part of the suggested structure in the STOM implementation:
+1. Expanding the topic to related topics
+2. Retrieving Wiki pages about the related topics
+3. Creating a dialog between a "Wiki Editor" persona and "Expert" persona
+4. Using the discussion to create question to be used in the quiz
+
+I decided not to go through with the vectorestore and section writer as I only used the concept of expanding the topic to have a rich and diverse context for the quiz creation.
+
+
 ## Getting Started
 
 ### Prerequisites
@@ -37,18 +47,18 @@ To install and set up this project, follow these steps:
    `git clone https://github.com/yourusername/project-name.git`
 	
 2.   Navigate to the project directory:
- 
+	
 	`cd project-name`
 
-3. create a virtual environment:
+4. create a virtual environment:
 
 	`python3 -m venv venv`
 
-4. Activate the virtual environment:
+5. Activate the virtual environment:
 
 	`source venv/bin/activate`
     
-5.  Install the required packages:
+6.  Install the required packages:
     
 	`pip install -r requirements.txt`
 
