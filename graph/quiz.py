@@ -1,13 +1,15 @@
 
-from typing import List, Optional
+from typing import List
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.pydantic_v1 import BaseModel, Field
-from langchain_core.runnables import RunnableConfig
 
 
 from graph.llm import llm
 from graph.state import InterviewState
+
+from typing_extensions import TypedDict
+from graph.perspective import Editor 
 
 class QuizAnswers(BaseModel):
     answer: str = Field(
@@ -34,8 +36,16 @@ class Quiz(BaseModel):
     )
     length: int = Field(
         description="The number of questions included in the quiz. This is an integer representing the total count of questions.",
-        default=2
+        default=10
     )
+
+
+class ResearchState(TypedDict):
+    topic: str
+    level: str
+    editors: List[Editor]
+    interview_results: List[InterviewState]
+    quiz: Quiz
 
 
 direct_gen_outline_prompt = ChatPromptTemplate.from_messages(
@@ -55,13 +65,21 @@ gen_quiz_prompt = ChatPromptTemplate.from_messages(
             """You are an expert quiz writer. write a quiz to the given article.\
 You are asked to create a quiz in one of the following levels: [easy, medium, hard].\
 The quiz should be as diverse as possible and hsould not repeat questions.\
-If the chosen level is easy, the questions should be everyone knowledge and very broad.
-here is an example for question in every level if the topic was "FIFA World Cup 2022":
-easy - Who won the FIFA World Cup 2022?
-medium - Who was the top scorer at FIFA World Cup 2022?
-Hard - how many goals did the top scorer scored at FIFA World Cup 2022?
-When you have no more questions to ask, say "Goodluck with the quiz!" to end the conversation.
-The quiz is about the following article:
+
+here are some instructions for the level:\
+easy - every kid should be able to answer\
+medium - stadard difficulty\
+hard - experts only\
+
+
+
+here is an example for question in every level if the topic was "FIFA World Cup 2022":\
+easy - Who won the FIFA World Cup 2022?\
+medium - Who was the top scorer at FIFA World Cup 2022?\
+Hard - how many goals did the top scorer scored at FIFA World Cup 2022?\
+
+When you have no more questions to ask, say "Goodluck with the quiz!" to end the conversation.\
+The quiz is about the following article:\
 {article}
             """,
         ),
@@ -71,15 +89,6 @@ The quiz is about the following article:
 
 gen_quiz_chain = gen_quiz_prompt | llm.with_structured_output(Quiz, include_raw=True)
 
-def gen_quiz(
-    state: InterviewState,
-    config: Optional[RunnableConfig] = None,
-    max_str_len: int = 15000,
-):
-    context = "\n\n".join([msg.content for msg in state["messages"]])
-    quiz = gen_quiz_chain.invoke({"article": context, "level": "easy", "length": 2})
-    return {"messages": [quiz], "references": state["references"]}
-    
 
 
 if __name__ == "__main__":
@@ -106,3 +115,5 @@ if __name__ == "__main__":
 
     quiz = gen_quiz_chain.invoke({"article": example_answer, "level": "easy", "length": 10})
     print(quiz)
+
+

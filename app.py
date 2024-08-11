@@ -1,10 +1,6 @@
 import streamlit as st
 
-from langchain_core.messages import AIMessage
-
-from graph.main import interview_graph
-from graph.perspective import survey_subjects
-from graph.quiz import Quiz, QuizAnswers, QuizQuestion
+from graph.main import storm
 
 if "submit" not in st.session_state:
     st.session_state.submit = False
@@ -34,26 +30,8 @@ if st.session_state.submit:
         st.write(f"Difficulty Level: {level}")
 
         if not st.session_state.quiz:
-            perspectives = survey_subjects.invoke(topic)
-            initial_state = [
-                {
-                    "editor": editor, #perspectives.editors[0],
-                    "messages": [
-                        AIMessage(
-                            content=f"So you said you were writing an article on {topic}?",
-                            name="Subject_Matter_Expert",
-                        )
-                    ]
-                }
-                for editor in perspectives.editors
-            ]
-
-            generated_quiz = interview_graph.batch(initial_state)
-            quiz = []
-            for editor in generated_quiz:
-                editor_questions = editor['messages'][-1]['parsed'].questions
-                quiz += editor_questions
-            st.session_state.quiz = quiz
+            quiz = storm.invoke({"topic": topic, "level": level})
+            st.session_state.quiz = quiz['quiz']['parsed'].questions
 
         for q in st.session_state.quiz:
             st.write(q.question)
