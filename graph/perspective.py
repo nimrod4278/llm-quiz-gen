@@ -17,7 +17,7 @@ class Editor(BaseModel):
     )
     role: str = Field(
         description="Role of the editor in the context of the topic.",
-    )
+    )   
     description: str = Field(
         description="Description of the editor's focus, concerns, and motives.",
     )
@@ -30,7 +30,6 @@ class Editor(BaseModel):
 class Perspectives(BaseModel):
     editors: List[Editor] = Field(
         description="Comprehensive list of editors with their roles and affiliations.",
-        # Add a pydantic validation/restriction to be at most M editors
     )
     length: int = Field(
         description="The max number of editors.",

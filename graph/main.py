@@ -42,7 +42,7 @@ if __name__ == "__main__":
     perspectives = survey_subjects.invoke(example_topic)
     initial_state = [
         {
-            "editor": editor, #perspectives.editors[0],
+            "editor": editor,
             "messages": [
                 AIMessage(
                     content=f"So you said you were writing an article on {example_topic}?",
