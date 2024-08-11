@@ -46,9 +46,9 @@ For more information on the STOM implementation, check out:
 ### Installation
 
 1.  Clone the repository: 
-`git clone https://github.com/yourusername/llm-quiz-generator.git`
+`git clone https://github.com/nimrod4278/llm-quiz-gen.git`
 
-3.  Navigate to the project directory: `cd llm-quiz-generator`
+3.  Navigate to the project directory: `cd llm-quiz-gen`
 4.  Create a virtual environment: `python3 -m venv venv`
 5.  Activate the virtual environment:
     -   On Unix or MacOS: `source venv/bin/activate`
